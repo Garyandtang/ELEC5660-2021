@@ -36,15 +36,26 @@ e_p_int =  dt * e_p +e_p_int;
 count = count + 1;
 %% position control
 % parameters
-k_p_p_1 = 7; % position control K_p
+k_p_p_1 = 5; % position control K_p
 k_p_p_2 = 9; % position control K_p
 k_p_p_3 = 18.5; % position control K_p
-k_p_i_1 = 0; % position control K_i
-k_p_i_2 = 0.00; % position control K_i
-k_p_i_3 = 0.00; % position control K_i
-k_p_d_1 = 7.5; % position control K_d
-k_p_d_2 = 7.5; % position control K_d
+k_p_i_1 = 0.00001; % position control K_i
+k_p_i_2 = 0.00001; % position control K_i
+k_p_i_3 = 0.00001; % position control K_i
+k_p_d_1 = 7; % position control K_d
+k_p_d_2 = 7; % position control K_d
 k_p_d_3 =  22; % position control K_d
+
+% kp = 2.1;
+% k_p_d_3 = kp*8.8;
+% k_p_d_2 = kp*3.2;
+% k_p_d_1 = kp*3.2;
+% k_p_p_3 = kp*7.4;
+% k_p_p_2 = kp*2.55;
+% k_p_p_1 = kp*2.75;
+% k_p_i_3 = 0.0;
+% k_p_i_2 = 0.01;
+% k_p_i_1 = 0.01;
 
 % PID controller  p_ddot_c_i denotes \ddot{p}_{i,c} 
 p_ddot_c_1 = s_des(7) + k_p_d_1*e_v(1) + k_p_p_1*e_p(1) + k_p_i_1*e_p_int(1);
@@ -87,7 +98,13 @@ k_psi_p = 250;
 k_phi_d =80;
 k_theta_d = 80;
 k_psi_d =62.5;
-
+% ko = 2.5;
+% k_phi_p  = ko*125;
+% k_theta_p = ko*125;
+% k_psi_p = ko*120;
+% k_phi_d =ko*32.0;
+% k_theta_d = ko*32.0;
+% k_psi_d = ko*24.0;% K_d_the
 % PID controller 
 phi_ddot_c = k_phi_p*EulerAngleClamp(phi_c-phi)+k_phi_d*(phi_dot_c-phi_dot);
 theta_ddot_c = k_theta_p*EulerAngleClamp(theta_c-theta)+k_theta_d*(theta_dot_c-theta_dot);

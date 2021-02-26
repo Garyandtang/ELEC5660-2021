@@ -23,30 +23,39 @@ debug_flag = 0;
 e_p = s_des(1:3) - s(1:3);
 e_v = s_des(4:6) - s(4:6);
 
-global 	T_pre e_p_int count P_RMS_list V_RMS_list 
-% P_RMS = P_RMS + e_p'*e_p;
-% V_RMS = V_RMS + e_v'*e_v;
-P_RMS =  e_p'*e_p;
-V_RMS = + e_v'*e_v;
-P_RMS_list = [P_RMS_list;P_RMS];
-
-disp("Postion_RMS: "+num2str(P_RMS));
-disp("Velocity_RMS: "+num2str(V_RMS));
+global 	T_pre e_p_int count P_MSE_list V_MSE_list  P_RMS V_RMS
+P_RMS = P_RMS + e_p'*e_p;
+V_RMS = V_RMS + e_v'*e_v;
+P_MSE_list = [P_MSE_list;e_p'*e_p];
+V_MSE_list = [V_MSE_list; e_v'*e_v];
+disp("Postion_MSE: "+num2str( e_p'*e_p));
+disp("Velocity_MSE: "+num2str(e_v'*e_v));
 dt = t - T_pre;
 T_pre = t;
 e_p_int =  dt * e_p +e_p_int;
 count = count + 1;
 %% position control
 % parameters
-k_p_p_1 = 7; % position control K_p
+k_p_p_1 = 5; % position control K_p
 k_p_p_2 = 9; % position control K_p
 k_p_p_3 = 18.5; % position control K_p
-k_p_i_1 = 0; % position control K_i
-k_p_i_2 = 0.01; % position control K_i
-k_p_i_3 = 0.01; % position control K_i
-k_p_d_1 = 7.5; % position control K_d
-k_p_d_2 = 7.5; % position control K_d
+k_p_i_1 = 0.00001; % position control K_i
+k_p_i_2 = 0.00001; % position control K_i
+k_p_i_3 = 0.00001; % position control K_i
+k_p_d_1 = 7; % position control K_d
+k_p_d_2 = 7; % position control K_d
 k_p_d_3 =  22; % position control K_d
+
+% kp = 2.1;
+% k_p_d_3 = kp*8.8;
+% k_p_d_2 = kp*3.2;
+% k_p_d_1 = kp*3.2;
+% k_p_p_3 = kp*7.4;
+% k_p_p_2 = kp*2.55;
+% k_p_p_1 = kp*2.75;
+% k_p_i_3 = 0.0;
+% k_p_i_2 = 0.01;
+% k_p_i_1 = 0.01;
 
 % PID controller  p_ddot_c_i denotes \ddot{p}_{i,c} 
 p_ddot_c_1 = s_des(7) + k_p_d_1*e_v(1) + k_p_p_1*e_p(1) + k_p_i_1*e_p_int(1);
@@ -83,13 +92,19 @@ psi_dot_c = s_des(11);
 
 % parameters
 ko = 2.5;
-k_phi_p = ko*125;
-k_theta_p = ko*50;
-k_psi_p = ko*100;
-k_phi_d = ko*32.0;
-k_theta_d = ko*32.0;
-k_psi_d = ko*25.0;
-
+k_phi_p = 312.5;
+k_theta_p = 125;
+k_psi_p = 250;
+k_phi_d =80;
+k_theta_d = 80;
+k_psi_d =62.5;
+% ko = 2.5;
+% k_phi_p  = ko*125;
+% k_theta_p = ko*125;
+% k_psi_p = ko*120;
+% k_phi_d =ko*32.0;
+% k_theta_d = ko*32.0;
+% k_psi_d = ko*24.0;% K_d_the
 % PID controller 
 phi_ddot_c = k_phi_p*EulerAngleClamp(phi_c-phi)+k_phi_d*(phi_dot_c-phi_dot);
 theta_ddot_c = k_theta_p*EulerAngleClamp(theta_c-theta)+k_theta_d*(theta_dot_c-theta_dot);
@@ -99,10 +114,6 @@ omega_dot_c =[phi_ddot_c;theta_ddot_c;psi_ddot_c];
 M=I*omega_dot_c+cross(omega,I*omega);
 end
 
-
-
-
 function [result] =  EulerAngleClamp(angle)
 result = atan2(sin(angle), cos(angle));
 end
-

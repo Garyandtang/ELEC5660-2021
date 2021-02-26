@@ -28,8 +28,8 @@ P_RMS = 0;
 V_RMS = 0;
 % Run Trajectory  three trajectories, test one by one
 % run_trajectory_readonly(h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, @hover_trajectory);
-run_trajectory_readonly(h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, @circle_trajectory);
-% run_trajectory_readonly(h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, @diamond_trajectory);
+% run_trajectory_readonly(h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, @circle_trajectory);
+run_trajectory_readonly(h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, @diamond_trajectory);
 
 P_RMS = sqrt(P_RMS/count);
 V_RMS = sqrt(V_RMS/count);
