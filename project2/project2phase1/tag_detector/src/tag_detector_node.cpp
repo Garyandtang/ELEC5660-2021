@@ -11,7 +11,7 @@
 #include <opencv2/opencv.hpp>
 #include <Eigen/Eigen>
 #include <Eigen/SVD>
-#include <opencv2/core/eigen.hpp>
+ #include <opencv2/core/eigen.hpp>
 //EIgen SVD libnary, may help you solve SVD
 //JacobiSVD<MatrixXd> svd(A, ComputeThinU | ComputeThinV);
 
@@ -66,7 +66,7 @@ void process(const vector<int> &pts_id, const vector<cv::Point3f> &pts_3, const 
     cv::solvePnP(pts_3, pts_2, K, D, rvec, t);
     cv::Rodrigues(rvec, r);
     Matrix3d R_ref;
-    Vector3d T_ref;
+        Vector3d T_ref;
     for (int i = 0; i < 3; i++){
         T_ref(i)=t.at<double>(i, 0);
     }
@@ -96,14 +96,18 @@ void process(const vector<int> &pts_id, const vector<cv::Point3f> &pts_3, const 
     vector<cv::Point2f> un_pts_2;
     cv::undistortPoints(pts_2, un_pts_2, K, D);
 
-    //===========================My code begin================================================
-    // ROS_INFO_STREAM("Undistroted_points:\n" << un_pts_2[0].cross(un_pts_2[0]) << "\n");
+    //======================================================================================
     frame = frame+1;
     int pts_num = pts_3.size();
     MatrixXd A = MatrixXd::Zero(2*pts_num, 9);
     MatrixXd b = MatrixXd::Zero(2*pts_num, 1);
     Matrix3d K_eg;
     cv2eigen(K, K_eg);
+    cv::undistortPoints(pts_2, un_pts_2, K, D,noArray(),K);
+    
+    // ROS_INFO_STREAM("Undistroted_points:\n" << un_pts_2 << "\n");
+    // Vector3f x_hat = A.colPivHouseholderQr().solve(b);
+    // ROS_INFO_STREAM("x_hat:\n" << x_hat << "\n");
     for (int i = 0; i < pts_num; i++){
         A.block(2*i,0,2,9) << pts_3[i].x, pts_3[i].y, 1, 0, 0, 0, - pts_3[i].x * un_pts_2[i].x, -pts_3[i].y*un_pts_2[i].x, - un_pts_2[i].x,
                                 0, 0, 0, pts_3[i].x, pts_3[i].y, 1, - pts_3[i].x * un_pts_2[i].y, -pts_3[i].y*un_pts_2[i].y, - un_pts_2[i].y;
@@ -119,7 +123,7 @@ void process(const vector<int> &pts_id, const vector<cv::Point3f> &pts_3, const 
     }
     // ROS_INFO_STREAM("H_hat:\n" << H_hat << "\n");
     MatrixXd H_hat_ = MatrixXd::Zero(3,3);
-    H_hat_ = H_hat.transpose(); // no needed
+    H_hat_ = H_hat.transpose(); // I believe we should do the transpose
 
     MatrixXd T_tilde = K_eg.inverse()*H_hat;
     Matrix3d R_tilde;
@@ -144,17 +148,8 @@ void process(const vector<int> &pts_id, const vector<cv::Point3f> &pts_3, const 
 
     ROS_INFO_STREAM("R_diff F norm:\n" << total_R_norm/frame << "\n");
     ROS_INFO_STREAM("T_diff F norm:\n" << total_T_norm/frame << "\n");
-    
-    // // to calculate reprojection error
-    // // transfer Eigen to cv mat
-    // Mat R_mat, T_mat;
-    // eigen2cv(R, R_mat);
-    // eigen2cv(T, T_mat);
-    // // ROS_INFO_STREAM("T:\n" << T << "\n");
-    // // ROS_INFO_STREAM("T_mat:\n" << T_mat << "\n");
-    // calculateReprojectionError(pts_3,pts_2, R_mat, T_mat);
 
-    //=================================My code end=================================================
+    //======================================================================================
     Quaterniond Q_yourwork;
     Q_yourwork = R;
     nav_msgs::Odometry odom_yourwork;
@@ -243,3 +238,4 @@ int main(int argc, char **argv)
 
     ros::spin();
 }
+
