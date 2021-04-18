@@ -19,10 +19,17 @@ Ubuntu 16.04 with Ros Kinetic
 * catkin library
 * Eigen: 3.3
 * ceres: 1.14
+* libdw-dev
 
 #### Install
 
 Follow the tutorials in Eigen, OpenCV and ceres official website to install them.
+
+Install libdw-dev with apt-get
+
+```
+sudo apt-get install libdw-dev
+```
 
 #### Data
 
