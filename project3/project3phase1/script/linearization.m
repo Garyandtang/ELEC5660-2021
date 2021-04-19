@@ -27,4 +27,5 @@ f(13:15) = n(10:12);
 
 fdx = jacobian(f,x)
 fdn = jacobian(f,n)
+subs(fdx, x,zeros(15,1))
 % fdx = jacobian(f(2),x)

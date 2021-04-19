@@ -4,6 +4,8 @@
 
 Source code of ELEC5660 Introduction to Aerial Robotics by [Prof. Shaojie Shen](https://facultyprofiles.ust.hk/profiles.php?profile=shaojie-shen-eeshaojie/) at HKUST.
 
+C++ for Project 2-4, Matlab for Project 1.
+
 This year we totally have 4 projects in this course, including 
 
 - [x] Project 1 (Control and Planning)
@@ -14,6 +16,7 @@ This year we totally have 4 projects in this course, including
   - [x] 3D-2D Pose Estimation with Direct  Linear Transform (DLT)
   - [x] Visual Odometry with Stereo Camera
 - [ ] Project 3 (EKF sensor fusion)
+  - [x] EKF for quadrotor state estimation
 - [ ] Project 4 (System integration on-board the drone)
 
 
@@ -22,15 +25,15 @@ This year we totally have 4 projects in this course, including
 
 The project 1 is done in **MATLAB simulator**, where I implemented 1) Quadrotor trajectory tracking control; 2) Optimization-based trajectory generation;. 3) path planning + trajectory generation + control.
 
-#### Phase 1 Result
+#### Phase 1 Result (PID)
 
 ![phase_1](project1/proj1phase1/code/img/diamond.jpg)
 
-#### Phase 2 Result
+#### Phase 2 Result (PID+Trajectory Generation)
 
 ![phase_2](project1/proj1phase2/code/img/path4.jpg)
 
-#### Phase 3 Result
+#### Phase 3 Result (PID+A*+Trajectory Generation)
 
 ![phase_1](project1/proj1phase3/code/img/path2.jpg)
 
@@ -41,13 +44,26 @@ The project 1 is done in **ROS ** with offline dataset. The code is done with C+
 1. 3D-2D Pose Estimation with Direct  Linear Transform (DLT)
 2. Visual Odometry with Stereo Camera
 
-#### Phase 1 Result
+#### Phase 1 Result (Pose Estimation)
 
 ![phase_1](project2/project2phase1/tag_detector/document/proj2phase1_result.png)
 
-#### Phase 2 Result
+#### Phase 2 Result (Visual Odometry)
 
 ![phase_1](project2/project2phase2/img/project2phase2_result.png)
+
+
+
+## Project 3 (Sensor Fusion)
+
+The project 3 is done in **ROS ** with offline dataset. The code is done with C++. Two sub tasks are:
+
+1. EKF for quadrotor state estimation.
+2.   Augmented EKF
+
+#### Phase 1 Result (EKF for Quadrotor State Estimation)
+
+![phase_1](project3/project3phase1/img/EKF_result_RVIZ.png)
 
 
 
@@ -76,7 +92,9 @@ The project 1 is done in **ROS ** with offline dataset. The code is done with C+
 ├── project2
 │   ├── project2phase1
 │   │   ├── aruco-1.2.4
+│   │   ├── assignment.pdf
 │   │   ├── project2pahse1_jiawei.pdf
+│   │   ├── readme.md
 │   │   └── tag_detector
 │   └── project2phase2
 │       ├── assignment.pdf
@@ -84,11 +102,20 @@ The project 1 is done in **ROS ** with offline dataset. The code is done with C+
 │       ├── img
 │       ├── project2pahse2_Jiawei.md
 │       ├── project2pahse2_Jiawei.pdf
+│       ├── readme.md
 │       └── stereo_vo_estimator
+├── project3
+│   ├── project3phase1
+│   │   ├── assignment.pdf
+│   │   ├── ekf
+│   │   ├── img
+│   │   ├── project3pahse1_Jiawei.md
+│   │   ├── project3pahse1_Jiawei.pdf
+│   │   ├── readme.md
+│   │   └── script
+│   └── project3phase1_Jiawei_Tang.zip
 ├── readme.md
 └── testing
-    └── angular_velocity.m
-
-
+    └── angular_velocity.
 ```
 
