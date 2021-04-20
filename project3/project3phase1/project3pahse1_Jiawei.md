@@ -27,13 +27,7 @@
    set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
    ```
 
-#### Dependencies
-
-* Ubuntu 16.04 with Ros Kinetic; Eigen: 3.3; Aruco: 1.2.4
-
 #### Figures
-
-From up to bottom are RVIZ result, position result, orientation result and linear velocity result of EKF.
 
 **Figure 1: RVIZ result**: 
 

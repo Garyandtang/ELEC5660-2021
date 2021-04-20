@@ -95,32 +95,7 @@ void imu_callback(const sensor_msgs::Imu::ConstPtr &msg)
     // u.segment(3,3) = linear_acc;
     // cout << u.transpose() << endl;
 }
-void pub_ekf_odom(const VectorXd &x, const std_msgs::Header &hd) {
-  Matrix3d R_wi;
-  R_wi << cos(x(5)) * cos(x(4)) - sin(x(3)) * sin(x(5)) * sin(x(4)), -cos(x(3)) * sin(x(5)), cos(x(5)) * sin(x(4)) +
-                                                                                             cos(x(4)) * sin(x(3)) *
-                                                                                             sin(x(5)),
-          cos(x(4)) * sin(x(5)) + cos(x(5)) * (sin(x(3))) * sin(x(4)), cos(x(3)) * cos(x(5)), sin(x(5)) * sin(x(4)) -
-                                                                                              cos(x(5)) * sin(x(3)) *
-                                                                                              cos(x(4)),
-          -cos(x(3)) * sin(x(4)), sin(x(3)), cos(x(3)) * cos(x(4));
 
-  Quaterniond q(R_wi);
-  nav_msgs::Odometry ekf_odom;
-  ekf_odom.header.frame_id = "world";
-  ekf_odom.header.stamp = hd.stamp;
-  ekf_odom.pose.pose.position.x = x(0);
-  ekf_odom.pose.pose.position.y = x(1);
-  ekf_odom.pose.pose.position.z = x(2);
-  ekf_odom.twist.twist.linear.x = x(6);
-  ekf_odom.twist.twist.linear.y = x(7);
-  ekf_odom.twist.twist.linear.z = x(8);
-  ekf_odom.pose.pose.orientation.x = q.x();
-  ekf_odom.pose.pose.orientation.y = q.y();
-  ekf_odom.pose.pose.orientation.z = q.z();
-  ekf_odom.pose.pose.orientation.w = q.w();
-  odom_pub.publish(ekf_odom);
-}
 //Rotation from the camera frame to the IMU frame
 Eigen::Matrix3d Rcam;
 void odom_callback(const nav_msgs::Odometry::ConstPtr &msg)
