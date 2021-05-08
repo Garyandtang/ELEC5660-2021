@@ -3,6 +3,12 @@
 close all;
 clc;
 addpath('./utils','./readonly');
+Rot = [ 0.999957  0.00279888 -0.00878733
+ 0.00298411   -0.999772   0.0211375
+-0.00872617  -0.0211628   -0.999738
+]
+[Z, X, Y] = RotToRPY_ZXY(Rot)
+return
 figure(1)
 h1 = subplot(3,4,1);
 h2 = subplot(3,4,2);

@@ -15,8 +15,9 @@ This year we totally have 4 projects in this course, including
 - [x] Project 2 (Visual estimator)
   - [x] 3D-2D Pose Estimation with Direct  Linear Transform (DLT)
   - [x] Visual Odometry with Stereo Camera
-- [ ] Project 3 (EKF sensor fusion)
+- [x] Project 3 (EKF sensor fusion)
   - [x] EKF for quadrotor state estimation
+  - [x] Augmented EKF with imu, visual odometry, and tag detection
 - [ ] Project 4 (System integration on-board the drone)
 
 
@@ -59,13 +60,21 @@ The project 1 is done in **ROS ** with offline dataset. The code is done with C+
 The project 3 is done in **ROS ** with offline dataset. The code is done with C++. Two sub tasks are:
 
 1. EKF for quadrotor state estimation.
-2.   Augmented EKF
+2.   Augmented EKF for quadrotor state estimation with tag detection, visual odometry and IMU.
 
 #### Phase 1 Result (EKF for Quadrotor State Estimation)
 
 ![phase_1](project3/project3phase1/img/EKF_result_RVIZ.png)
 
 
+
+#### Phase 2 Result (Augmented EKF for Quadrotor State Estimation)
+
+![phase_2](project3/project3phase2/img/AEKF_odom.png)
+
+![phase_2](project3/project3phase2/img/AEKF_simple.png)
+
+![phase_2](project3/project3phase2/img/AEKF_vo.png)
 
 ## Folder Structure
 
@@ -113,9 +122,19 @@ The project 3 is done in **ROS ** with offline dataset. The code is done with C+
 │   │   ├── project3pahse1_Jiawei.pdf
 │   │   ├── readme.md
 │   │   └── script
-│   └── project3phase1_Jiawei_Tang.zip
+│   └── project3phase2
+│       ├── aug_ekf
+│       ├── img
+│       ├── project3pahse2_Jiawei.md
+│       ├── project3pahse2_Jiawei.pdf
+│       ├── readme.md
+│       ├── stereo_vo
+│       └── tag_detector
 ├── readme.md
 └── testing
-    └── angular_velocity.
+    └── angular_velocity.m
 ```
 
+## Academic Integrity Policy
+
+Students at Hong Kong University of Science and Technology are expected to produce their own  original academic work. Please think carefully when you are using the  codes and do not violate academic integrity policy.

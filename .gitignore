@@ -31,3 +31,4 @@ codegen/
 octave-workspace
 .vscode
 .idea
+*.zip

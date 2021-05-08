@@ -52,7 +52,7 @@
 
 The implementation of this project is following with the materials in Lecture 9. More especially, The model is based P27-P33 Quadrotor with a Good Acceleration Sensor. The derivation of EKF is based on P13.
 
-Since we trust the camera more, the covirance matrix $R$ is set to $0.01\times Identity(6)$, while covairance matrix of motion model $Q$ is set to $10\times diag(1,1,1,1,1,1,0.4,0.4,0.4,0.4,0.4,0.4)$. The initial convariance matrix of state $\Sigma$ is set to $0.5\times Identity(15)$.
+Since we trust the camera more, the covirance matrix $R$ is set to $0.01\times Identity(6)$, while covairance matrix of motion model $Q$ is set to $times diag(1,1,1,1,1,1,0.4,0.4,0.4,0.4,0.4,0.4)$. The initial convariance matrix of state $\Sigma$ is set to $0.5\times Identity(15)$.
 
 By the way, I also implemented a Matlab version for fine turning. Which is under `script` folder.
 

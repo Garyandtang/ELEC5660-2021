@@ -1,6 +1,6 @@
-# ELEC5660 Project 3 Phase 2: EKF for Quadrotor
+# ELEC5660 Project 3 Phase 1: EKF for Quadrotor
 
-C++ implementation of Extended Kalman filter for quadrotor state estimation with camera measurement and imu. =
+C++ implementation of Extended Kalman filter for quadrotor state estimation with camera measurement and imu. 
 
 ## Installation
 
@@ -44,3 +44,21 @@ It should be placed under `ekf/bag`.
 
 Show in `project3phase1_jiawei.pdf`
 
+**Figure 1: RVIZ result**: 
+
+* Axes: tag detection result by SolvePnP ($T_{cw}$)
+* Arrow: EKF result  of body frame under camera frame ($T_{wi}$)
+
+![EKF_RVIZ](/home/eeuser/Dropbox/01_hkust/01_course/ELEC5660/ELEC5660-2021/project3/project3phase1/img/EKF_result_RVIZ.png)
+
+**Figure 2: rqt result of position**: 
+
+![EKF_position](/home/eeuser/Dropbox/01_hkust/01_course/ELEC5660/ELEC5660-2021/project3/project3phase1/img/EKF_position_result.png)
+
+**Figure 3: rqt result of orientation**: 
+
+![EKF_orientation](/home/eeuser/Dropbox/01_hkust/01_course/ELEC5660/ELEC5660-2021/project3/project3phase1/img/EKF_orientation_result.png)
+
+**Figure 4: rqt result of linear velocity**: 
+
+![EKF_twist](/home/eeuser/Dropbox/01_hkust/01_course/ELEC5660/ELEC5660-2021/project3/project3phase1/img/EKF_twist_result.png)

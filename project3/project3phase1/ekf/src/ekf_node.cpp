@@ -42,7 +42,7 @@ void imu_callback(const sensor_msgs::Imu::ConstPtr &msg)
     Vector3d accel(msg->linear_acceleration.x, msg->linear_acceleration.y, msg->linear_acceleration.z);
     //angular velocity
     Vector3d ang_vel(msg->angular_velocity.x,msg->angular_velocity.y,msg->angular_velocity.z);
-    Matrix3d G, R, G_inv_dot, R_dot;
+    Matrix3d G, R, At_x2_x2, R_dot;
     double phi =x_est(3);
     double theta=x_est(4);
     double psi=x_est(5);
@@ -55,17 +55,26 @@ void imu_callback(const sensor_msgs::Imu::ConstPtr &msg)
             -cos(phi)*sin(theta), sin(phi), cos(phi)*cos(theta);
 
     Matrix3d G_inv = G.inverse();
+    // some rubbish from matlab
+    double x1, x2, x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,x13,x14,x15;
+    double n1,n2,n3,n4,n5,n6,w1,w2,w3;
+    x4 = x_est(3); x5 = x_est(4), x6 = x_est(5), x7 = x_est(6), x8 = x_est(7), x9 = x_est(8), x10 = x_est(9), x11 = x_est(10), x12 = x_est(11), x13 = x_est(12), x14 = x_est(13), x15 = x_est(14);
+    n1 = 0, n2 = 0, n3 = 0, n4= 0, n5 = 0, n6 = 0;
+    w1 = ang_vel(0), w2 = ang_vel(1), w3 = ang_vel(2);
+    At_x2_x2 << 0, (sin(x5)*(n1 - w1 + x10))/(cos(x5)*cos(x5) + sin(x5)*sin(x5)) - (cos(x5)*(n3 - w3 + x12))/(cos(x5)*cos(x5) + sin(x5)*sin(x5)), 0, 
+                 (cos(x4)*cos(x5)*(n3 - w3 + x12))/(cos(x4)*cos(x5)*cos(x5) + cos(x4)*sin(x5)*sin(x5)) - (cos(x4)*sin(x5)*(n1 - w1 + x10))/(cos(x4)*cos(x5)*cos(x5) + cos(x4)*sin(x5)*sin(5)) + (cos(x5)*sin(x4)*(sin(x4)*cos(x5)*cos(x5) + sin(x4)*sin(x5)*sin(x5))*(n3 - w3 + x12))/(cos(x4)*cos(x5)*cos(x5) + cos(x4)*sin(x5)*sin(x5))*(cos(x4)*cos(x5)*cos(x5) + cos(x4)*sin(x5)*sin(x5)) - (sin(x4)*sin(x5)*(sin(x4)*cos(x5)*cos(x5) + sin(x4)*sin(x5)*sin(x5))*(n1 - w1 + x10))/(cos(x4)*cos(x5)*cos(x5) + cos(x4)*sin(x5)*sin(x5))*(cos(x4)*cos(x5)*cos(x5) + cos(x4)*sin(x5)*sin(x5)), 
+                 - (sin(x4)*sin(x5)*(n3 - w3 + x12))/(cos(x4)*cos(x5)*cos(x5) + cos(x4)*sin(x5)*sin(x5)) - (cos(x5)*sin(x4)*(n1 - w1 + x10))/(cos(x4)*cos(x5)*cos(x5) + cos(x4)*sin(x5)*sin(x5)), 0,
+                (sin(x5)*(sin(x4)*cos(x5)*cos(x5) + sin(x4)*sin(x5)*sin(x5))*(n1 - w1 + x10))/(cos(x4)*cos(x5)*cos(x5) + cos(x4)*sin(x5)*sin(x5))*(cos(x4)*cos(x5)*cos(x5) + cos(x4)*sin(x5)*sin(x5)) - (cos(x5)*(sin(x4)*cos(x5)*cos(x5) + sin(x4)*sin(x5)*sin(x5))*(n3 - w3 + x12))/(cos(x4)*cos(x5)*cos(x5) + cos(x4)*sin(x5)*sin(x5))*(cos(x4)*cos(x5)*cos(x5) + cos(x4)*sin(x5)*sin(x5)), (cos(x5)*(n1 - w1 + x10))/(cos(x4)*cos(x5)*cos(x5) + cos(x4)*sin(x5)*sin(x5)) + (sin(x5)*(n3 - w3 + x12))/(cos(x4)*cos(x5)*cos(x5) + cos(x4)*sin(x5)*sin(x5)), 0;
+ 
 
-    G_inv_dot << 0, ang_vel(2)*cos(theta) - ang_vel(0)*sin(theta), 0,
-            ang_vel(0)*sin(theta) - ang_vel(2)*cos(theta) - (ang_vel(2)*cos(theta)*sin(phi)*sin(phi))/(cos(phi)*cos(phi)) + (ang_vel(0)*sin(phi)*sin(phi)*sin(theta))/(cos(phi)*cos(phi)), (ang_vel(0)*cos(theta)*sin(phi))/cos(phi) + (ang_vel(2)*sin(phi)*sin(theta))/cos(phi), 0,
-            (ang_vel(2)*cos(theta)*sin(phi))/(cos(phi)*cos(phi)) - (ang_vel(0)*sin(phi)*sin(theta))/(cos(phi)*cos(phi)), - (ang_vel(0)*cos(theta))/cos(phi) - (ang_vel(2)*sin(theta))/cos(phi), 0;
+    
     R_dot << accel(1)*sin(phi)*sin(psi) + accel(2)*cos(phi)*cos(theta)*sin(psi) - accel(0)*cos(phi)*sin(theta)*sin(psi), accel(2)*(cos(theta)*cos(psi) - sin(phi)*sin(theta)*sin(psi)) - accel(0)*(cos(psi)*sin(theta) + cos(theta)*sin(phi)*sin(psi)), - accel(0)*(cos(theta)*sin(psi) + cos(psi)*sin(phi)*sin(theta)) - accel(2)*(sin(theta)*sin(psi) - cos(theta)*cos(psi)*sin(phi)) - accel(1)*cos(phi)*cos(psi),
            accel(0)*cos(phi)*cos(psi)*sin(theta) - accel(2)*cos(phi)*cos(theta)*cos(psi) - accel(1)*cos(psi)*sin(phi), accel(2)*(cos(theta)*sin(psi) + cos(psi)*sin(phi)*sin(theta)) - accel(0)*(sin(theta)*sin(psi) - cos(theta)*cos(psi)*sin(phi)),   accel(0)*(cos(theta)*cos(psi) - sin(phi)*sin(theta)*sin(psi)) + accel(2)*(cos(psi)*sin(theta) + cos(theta)*sin(phi)*sin(psi)) - accel(1)*cos(phi)*sin(psi),
            accel(1)*cos(phi) - accel(2)*cos(theta)*sin(phi) + accel(0)*sin(phi)*sin(theta), - accel(0)*cos(phi)*cos(theta) - accel(2)*cos(phi)*sin(theta), 0;
 
     MatrixXd At = MatrixXd::Zero(15,15);
     At.block<3,3>(0,6) = MatrixXd::Identity(3,3);
-    At.block<3,3>(3,3) << G_inv_dot;
+    At.block<3,3>(3,3) << At_x2_x2;
     At.block<3,3>(6,3) << R_dot;
     At.block<3,3>(3,9) << -G_inv;
     At.block<3,3>(6,12) << -R;

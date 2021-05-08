@@ -1,0 +1,8 @@
+prefix=/home/eeuser/catkin_ws/src/tag_detector/cmake-build-debug/devel
+
+Name: tag_detector
+Description: Description of tag_detector
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/eeuser/catkin_ws/src/tag_detector/cmake-build-debug/devel/lib 
+Requires: 
