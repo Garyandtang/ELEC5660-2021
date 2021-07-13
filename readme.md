@@ -1,5 +1,4 @@
 [toc]
-
 # Source code for ELEC5660-2021
 
 Source code of ELEC5660 Introduction to Aerial Robotics by [Prof. Shaojie Shen](https://facultyprofiles.ust.hk/profiles.php?profile=shaojie-shen-eeshaojie/) at HKUST.
@@ -20,7 +19,8 @@ This year we totally have 4 projects in this course, including
   - [x] Augmented EKF with imu, visual odometry, and tag detection
 - [ ] Project 4 (System integration on-board the drone)
 
-
+## Dataset
+* Dataset of project 2 and project 3: https://hkustconnect-my.sharepoint.com/:f:/g/personal/jtangas_connect_ust_hk/EpemMUamNbFBtL2c18R_DfQBDykZWsBn9RR3IKZTftks6w?e=bQaWDb
 
 ## Project 1 (Control and Planning)
 
